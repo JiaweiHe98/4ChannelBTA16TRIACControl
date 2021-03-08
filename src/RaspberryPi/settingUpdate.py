@@ -56,4 +56,3 @@ while True:
 
     #for debug
     print(power_read, ' ', str(power_set).encode(), ' ', end - start, power_read != power_set)
-
