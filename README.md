@@ -3,7 +3,7 @@ A program that is used to control four dimmer channels simultaneously
 
 ## Arduino code
 
-```Arduino
+```c++
 //Main Timer
 unsigned long startTime = micros();
 
