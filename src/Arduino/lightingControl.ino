@@ -1,9 +1,3 @@
-# 4ChannelBAT16TRIACControl
-A program that is used to control four dimmer channels simultaneously
-
-## Arduino code
-
-```Arduino
 //Main Timer
 unsigned long startTime = micros();
 
@@ -16,14 +10,14 @@ int ch4 = 11;
 // Zero-crossing point detection
 int zeroCrossing = 2;
 
-// Power output initilization
+// Power output initialization
 int power[4] = {0, 0, 0, 0};
 int powerMax = 1000;
 
 //Flag
 bool isChanged = false;
 
-// Firing queue initilization. 8333 to 0
+// Firing queue initialization. 8333 to 0
 int timings[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
 int channelNum[8] = {ch1, ch1, ch2, ch2, ch3, ch3, ch4, ch4};
 bool states[8] = {true, false, true, false, true, false, true, false};
@@ -60,15 +54,18 @@ void loop() {
     delay(1000);
   }
   
+  //Receive settings
   if (Serial.available() > 0) {
     receivePower();
   }
 
+  //Update settings
   if (isChanged) {
     makeQueue();
     isChanged = false;
   }
 
+  //Send back power levels
   if ((millis() - sendBack) > 10000) {
     sendPower();
     sendBack = millis();
@@ -80,6 +77,8 @@ void loop() {
 //  sequenceStart();
 }
 
+
+//For receiving settings
 void receivePower() {
   for (int i = 0; i < 4; i++) {
     power[i] = Serial.parseInt();
@@ -89,6 +88,7 @@ void receivePower() {
   sendPower();
 }
 
+//Send back power levels
 void sendPower() {
   Serial.print("[");
   for (int i = 0; i < 4; i++) {
@@ -99,6 +99,7 @@ void sendPower() {
   }
   Serial.println("]");
 
+// For debuging
 //  Serial.print("[");
 //  for (int i = 0; i < 8; i++) {
 //    Serial.print(timings[i]);
@@ -127,12 +128,14 @@ void sendPower() {
 //  Serial.println("]");
 }
 
+//Flush the remaining garbage information in serial buffer
 void bufferFlush() {
   while(Serial.available() > 0) {
     char t = Serial.read();
   }
 }
 
+//Sending pulse to the dimmer
 void firing(int chNum, bool state) {
   if (state) {
     digitalWrite(chNum, HIGH);
@@ -141,11 +144,16 @@ void firing(int chNum, bool state) {
   }
 }
 
+//Make a queue for pulling up and pulling down the voltage of control pins
 void makeQueue() {
+
+  //Temporary arrays 
   int timeOn[4];
   int timeOnPin[4] = {ch1, ch2, ch3, ch4};
   int timeOff[4];
   int timeOffPin[4] = {ch1, ch2, ch3, ch4};
+
+  //Push settings into temporary arrays. If power level is 0, output -1 for skiping the pulse
   for (int i = 0; i < 4; i++) {
     if (power[i] == 0) {
       timeOn[i] = -1;
@@ -156,11 +164,12 @@ void makeQueue() {
     }
   }
 
+  //Temporary variables for sorting
   int index;
   int minNum;
   int temp;
 
-  //sort time on
+  //Sort timings of pulling up
   for (int i = 0; i < 3; i++) {
     minNum = timeOn[i];
     index = i;
@@ -181,7 +190,7 @@ void makeQueue() {
     }
   }
 
-  //sort time off
+  //sort timings of pulling down
   for (int i = 0; i < 3; i++) {
     minNum = timeOff[i];
     index = i;
@@ -242,13 +251,13 @@ void makeQueue() {
   
 }
 
-//Set zrossing time
+//Set zero crossing time
 void sequenceStart() {
 
   //get start time
   startTime = micros();
 
-  //initilize current time
+  //initialize current time
   unsigned long timeNow;
 
   //start sequence
@@ -272,4 +281,3 @@ void sequenceStart() {
     }
   }
 }
-```
