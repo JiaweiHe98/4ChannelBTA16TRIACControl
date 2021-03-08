@@ -338,11 +338,11 @@ while True:
 
     #Decode message send back from Arduino
     start = time.perf_counter()
-    dataFormArduino = arduinoData.readline().decode('ASCII')[:-2]
+    dataFromArduino = arduinoData.readline().decode('ASCII')[:-2]
     end = time.perf_counter()
 
     #Convert string to list
-    power_read = eval(dataFormArduino)
+    power_read = eval(dataFromArduino)
 
     #Check the power level of the Arduino
     if power_read != power_set:
