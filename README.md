@@ -1,6 +1,27 @@
 # 4ChannelBAT16TRIACControl
 A program that is used to control four dimmer channels simultaneously
 
+## Node-Red Dashboard
+<img src="./img/UI.png">
+The gauges on the top show the current settings of each channel. The sliders below each gauge allow the users to assign new power level to each channel. We divided the power level into 1000 units. The line charts below the sliders help the users to monitor the history of the settings.
+
+### Real-time interaction with Python scrip and Arduino
+<img src="./img/PythonScript.png">
+False at the end of each line indicates that there is no difference between the user defined settings and settings stored on Arduino
+
+## Node-Red Flow
+<img src="./img/Flow1.png">
+
+## Inter-process communication
+We use a file to handle inter-process communication. The light intensity settings can be easily read from a file or write to a file with plain text. Therefore, we use a .txt file to store our settings and also to be our API between the Python script and Node-Red. The .txt file only contains 4 lines of integers.
+
+```
+100
+200
+1000
+0
+```
+
 ## Arduino code
 
 ```c++
