@@ -10,7 +10,7 @@ The gauges on the top show the current settings of each channel. The sliders bel
 False at the end of each line indicates that there is no difference between the user defined settings and settings stored on Arduino
 
 ## Node-Red Flow
-<img src="./img/Flow1.png">
+<img src="./img/Flow1.PNG">
 
 ## Inter-process communication
 We use a file to handle inter-process communication. The light intensity settings can be easily read from a file or write to a file with plain text. Therefore, we use a .txt file to store our settings and also to be our API between the Python script and Node-Red. The .txt file only contains 4 lines of integers.
