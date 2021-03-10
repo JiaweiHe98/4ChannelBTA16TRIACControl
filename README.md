@@ -1,5 +1,50 @@
 # 4ChannelBAT16TRIACControl
-A program that is used to control four dimmer channels simultaneously
+A program that is used to control four dimmer channels simultaneously.
+
+## Prepare for Developing
+This section will guide you through the software and tools required for building this project.
+
+### Visual Studio Code
+Visual Studio Code, also known as VSCode, is a popular and powerful text editor for developers. A good text editor is crucial for speeding up the coding process and debugging process.
+
+#### Install Visual Studio Code
+We recommend to use the official website for downloading the packages.
+Please go to [https://code.visualstudio.com/](https://code.visualstudio.com/) and follow the instruction on the web page.
+
+#### Recommended Extensions
+We recommend you to install the listed extensions for boosting your coding experience with VSCode
+* Arduino
+* C/C++
+* Python
+* vscode-icons
+
+### Arduino IDE
+Arduino IDE is a open-source integrated development environment designated for all Arduino boards. We will use this software to compile our code and burn it to our Arduino. It also has a serial monitor which allows us to interact with Arduino through serial communication.
+
+#### Install Arduino IDE
+We also recommend to use the official website for downloading the packages if you are on a Windows or MacOS machine.
+Simply go to [https://www.arduino.cc/en/software](https://www.arduino.cc/en/software) and find out your version.
+If you want to use a Raspberry Pi or a Linux machine to program the Arduino, you can simply update your software list by ```sudo apt-get update``` and install Arduino IDE by ```sudo apt-get install arduino``` in your console.
+
+### Node-Red
+Node-Red is a visual programming tool based on Node.js. It allows you to edit working flows inside a web browser through a wide range of nodes and deploy your flow by simply click deploy button on the right top corner.
+
+#### Install Node-Red
+If you are using Raspberry Pi and you chose "Raspberry Pi OS with desktop and recommended software", Node-red is already installed into your Raspberry Pi. Simply click the start button on the top-left and go to programming tab. Then, you will able to find Node-Red.
+
+If you are using a Windows machine, you first need to install Node.js and nmp. Go to [https://nodejs.org/](https://nodejs.org/) and download for Windows. Run the MSI file as administrator. Accept the default settings while installing. When finishing the installation, type ```node --version; npm --version``` in Powershell or ```node --version && npm --version``` in cmd to make sure that your installation is completed.
+
+You should see something similar to this:
+```
+v14.15.3
+6.14.9
+```
+
+Then, install Node-Red through ```npm install -g --unsafe-perm node-red``` and add ```node-red``` to your system path.
+
+If you are using Linux, you can install Node-Red with npm, docker, or snap. You can follow the [Documentation](https://nodered.org/docs/getting-started/local) on Node-Red official website.
+
+## Start Developing
 
 ## Node-Red Dashboard
 <img src="./img/UI.png">
