@@ -26,6 +26,12 @@ We also recommend to use the official website for downloading the packages if yo
 Simply go to [https://www.arduino.cc/en/software](https://www.arduino.cc/en/software) and find out your version.
 If you want to use a Raspberry Pi or a Linux machine to program the Arduino, you can simply update your software list by ```sudo apt-get update``` and install Arduino IDE by ```sudo apt-get install arduino``` in your console.
 
+### Python
+Python is a widely used program language and both python2 and python3 interpreters are pre installed into Raspberry Pi OS and MacOS.
+
+#### Install Python3 for Windows
+Go to [https://www.python.org/downloads/](https://www.python.org/downloads/) and choose the version you prefer. Don't forget to add PATH for python interpreter.
+
 ### Node-Red
 Node-Red is a visual programming tool based on Node.js. It allows you to edit working flows inside a web browser through a wide range of nodes and deploy your flow by simply click deploy button on the right top corner.
 
