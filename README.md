@@ -1,5 +1,8 @@
 # 4ChannelBAT16TRIACControl
-A program that is used to control four dimmer channels simultaneously.
+An integrated IoT (Internet of Thing) solution for controlling 4-Channel BAT16 TRIAC Board.
+
+<img src="./img/UI.png">
+The Arduino program is capable to control four dimmer channels simultaneously.
 
 ## Prepare for Developing
 This section will guide you through the software and tools required for building this project.
@@ -31,6 +34,9 @@ Python is a widely used program language and both python2 and python3 interprete
 
 #### Install Python3 for Windows
 Go to [https://www.python.org/downloads/](https://www.python.org/downloads/) and choose the version you prefer. Don't forget to add PATH for python interpreter.
+
+#### Install pyserial package
+pyserial can be installed through command line with pip. Type ```pip install pyserial``` to add pyserial library
 
 ### Node-Red
 Node-Red is a visual programming tool based on Node.js. It allows you to edit working flows inside a web browser through a wide range of nodes and deploy your flow by simply click deploy button on the right top corner.
@@ -108,16 +114,16 @@ void setup() {
     // opens serial port, sets data rate to 115200 bps
     Serial.begin(115200);    
 
-    // Initilize input pin
+    // Initialize input pin
     pinMode(zeroCrossing, INPUT);
 
-    // Initilize output pin
+    // Initialize output pin
     pinMode(ch1, OUTPUT);
     pinMode(ch2, OUTPUT);
     pinMode(ch3, OUTPUT);
     pinMode(ch4, OUTPUT);
 
-    // Initilize hardware interrupt, start sequence
+    // Initialize hardware interrupt, start sequence
     attachInterrupt(digitalPinToInterrupt(zeroCrossing), sequenceStart, FALLING);
 
     // send initial power level
@@ -149,7 +155,7 @@ void loop() {
     sendBack = millis();
   }
 
-  // for debuging
+  // for debugging
 //  delay(1000);
 //  sendPower();
 //  sequenceStart();
@@ -231,7 +237,7 @@ void makeQueue() {
   int timeOff[4];
   int timeOffPin[4] = {ch1, ch2, ch3, ch4};
 
-  //Push settings into temporary arrays. If power level is 0, output -1 for skiping the pulse
+  //Push settings into temporary arrays. If power level is 0, output -1 for skipping the pulse
   for (int i = 0; i < 4; i++) {
     if (power[i] == 0) {
       timeOn[i] = -1;
@@ -349,7 +355,7 @@ void sequenceStart() {
     if (timings[i] != -1) {
       firing(channelNum[i], states[i]);
 
-      // for debuging
+      // for debugging
 //      Serial.print("channelNum:");
 //      Serial.print(channelNum[i]);
 //      Serial.print("states:");
@@ -359,6 +365,7 @@ void sequenceStart() {
     }
   }
 }
+
 ```
 
 ## Python script on windows or Raspberry Pi
@@ -370,28 +377,33 @@ Communication relies on serial connection.
 A USB cable can be used for physically connecting the Arduino to Raspberry Pi
 '''
 
+# If not found, you need to install pyserial
 import serial
 import time
 
-#The first argument specify the serial port of the device
-#Usually 'COMx' for windows, 'dev/ttyUSBx' for Raspberry Pi
+# The first argument specify the serial port of the device
+# Usually 'COMx' for windows, 'dev/ttyUSBx' for Raspberry Pi
 arduinoData = serial.Serial('COM6', 115200)
 
-#Power level initialization, power primarily goes from 0 to 1000
+# Power level initialization, power primarily goes from 0 to 1000
 power_set = [0, 0, 0, 0]
 
-#Reading settings from a file
+# Reading settings from a file
 while True:
 
-    #Flag
+    # Flag
     isChanged = False
 
+    # Read the light intensity from file
     with open("lightIntensity.txt", "r") as light_intensity:
 
+        # Read the light intensity from lines
         light_levels = light_intensity.readlines()
         
+        # Update light intensity for each channel in order
         for i in range(4):
 
+            # Parse int from string
             try:
                 light_level = int(light_levels[i])
 
@@ -399,28 +411,29 @@ while True:
                     power_set[i] = light_level
                     isChanged = True
 
+            # Print out error signal
             except:
                 print('input file error!')
 
             
-    #Update setting
+    # Update setting
     if isChanged:
         arduinoData.write(str(power_set).encode())
         isChanged = False
 
-    #Decode message send back from Arduino
+    # Decode message send back from Arduino
     start = time.perf_counter()
     dataFromArduino = arduinoData.readline().decode('ASCII')[:-2]
     end = time.perf_counter()
 
-    #Convert string to list
+    # Convert string to list
     power_read = eval(dataFromArduino)
 
-    #Check the power level of the Arduino
+    # Check the power level of the Arduino and update the settings if the settings are different
     if power_read != power_set:
         arduinoData.write(str(power_set).encode())
 
-    #for debug
+    # For debug
     print(power_read, ' ', str(power_set).encode(), ' ', end - start, power_read != power_set)
 
 ```

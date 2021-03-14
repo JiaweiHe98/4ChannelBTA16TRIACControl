@@ -30,16 +30,16 @@ void setup() {
     // opens serial port, sets data rate to 115200 bps
     Serial.begin(115200);    
 
-    // Initilize input pin
+    // Initialize input pin
     pinMode(zeroCrossing, INPUT);
 
-    // Initilize output pin
+    // Initialize output pin
     pinMode(ch1, OUTPUT);
     pinMode(ch2, OUTPUT);
     pinMode(ch3, OUTPUT);
     pinMode(ch4, OUTPUT);
 
-    // Initilize hardware interrupt, start sequence
+    // Initialize hardware interrupt, start sequence
     attachInterrupt(digitalPinToInterrupt(zeroCrossing), sequenceStart, FALLING);
 
     // send initial power level
@@ -71,7 +71,7 @@ void loop() {
     sendBack = millis();
   }
 
-  // for debuging
+  // for debugging
 //  delay(1000);
 //  sendPower();
 //  sequenceStart();
@@ -153,7 +153,7 @@ void makeQueue() {
   int timeOff[4];
   int timeOffPin[4] = {ch1, ch2, ch3, ch4};
 
-  //Push settings into temporary arrays. If power level is 0, output -1 for skiping the pulse
+  //Push settings into temporary arrays. If power level is 0, output -1 for skipping the pulse
   for (int i = 0; i < 4; i++) {
     if (power[i] == 0) {
       timeOn[i] = -1;
@@ -271,7 +271,7 @@ void sequenceStart() {
     if (timings[i] != -1) {
       firing(channelNum[i], states[i]);
 
-      // for debuging
+      // for debugging
 //      Serial.print("channelNum:");
 //      Serial.print(channelNum[i]);
 //      Serial.print("states:");
