@@ -1,8 +1,13 @@
 # 4ChannelBAT16TRIACControl
-An integrated IoT (Internet of Thing) solution for controlling 4-Channel BAT16 TRIAC Board.
+An integrated IoT (Internet of Things) solution for controlling 4-Channel BAT16 TRIAC Board.
 
+### Web Dashboard
 <img src="./img/UI.png">
 The Arduino program is capable to control four dimmer channels simultaneously.
+
+### 3D Printed Control Box
+<img src="./img/3dBox.png">
+The box can be compatible with fans range from 40mm to 70mm.
 
 ## Prepare for Developing
 This section will guide you through the software and tools required for building this project.
