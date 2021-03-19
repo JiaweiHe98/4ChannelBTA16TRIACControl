@@ -27,23 +27,23 @@ unsigned long sendBack = millis();
 
 // Setup serial connection and define pins
 void setup() {
-    // opens serial port, sets data rate to 115200 bps
-    Serial.begin(115200);    
+  // opens serial port, sets data rate to 115200 bps
+  Serial.begin(115200);    
 
-    // Initialize input pin
-    pinMode(zeroCrossing, INPUT);
+  // Initialize input pin
+  pinMode(zeroCrossing, INPUT);
 
-    // Initialize output pin
-    pinMode(ch1, OUTPUT);
-    pinMode(ch2, OUTPUT);
-    pinMode(ch3, OUTPUT);
-    pinMode(ch4, OUTPUT);
+  // Initialize output pin
+  pinMode(ch1, OUTPUT);
+  pinMode(ch2, OUTPUT);
+  pinMode(ch3, OUTPUT);
+  pinMode(ch4, OUTPUT);
 
-    // Initialize hardware interrupt, start sequence
-    attachInterrupt(digitalPinToInterrupt(zeroCrossing), sequenceStart, FALLING);
+  // Initialize hardware interrupt, start sequence
+  attachInterrupt(digitalPinToInterrupt(zeroCrossing), sequenceStart, FALLING);
 
-    // send initial power level
-    sendPower();
+  // send initial power level
+  sendPower();
 }
 
 //Call functions in order

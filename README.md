@@ -47,7 +47,7 @@ Python is a widely used program language and both python2 and python3 interprete
 Go to [https://www.python.org/downloads/](https://www.python.org/downloads/) and choose the version you prefer. Don't forget to add PATH for python interpreter.
 
 #### Install pyserial package
-pyserial can be installed through command line with pip. Type ```pip install pyserial``` to add pyserial library
+pyserial can be installed through command line with pip. Type ```pip install pyserial``` to add pyserial library.
 
 ### Node-Red
 Node-Red is a visual programming tool based on Node.js. It allows you to edit working flows inside a web browser through a wide range of nodes and deploy your flow by simply click deploy button on the right top corner.
