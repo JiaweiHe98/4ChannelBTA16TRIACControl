@@ -22,6 +22,8 @@ lock = False
 
 # Update seetings function
 def update_settings():
+    global lock
+
     # Reading settings from a file
     while True:
 
@@ -58,9 +60,12 @@ def update_settings():
             lock = False
 
             isChanged = False
+        
             
 # Function for checking the settings and resend the settings
 def check_settings():
+
+    global lock
 
     while True:
         # Decode message send back from Arduino
@@ -78,6 +83,9 @@ def check_settings():
             lock = True
             arduinoData.write(str(power_set).encode())
             lock = False
+
+        # For debug
+        print(power_read, ' ', power_set, ' ', power_read != power_set)
 
 
 if __name__ == "__main__":
