@@ -18,7 +18,7 @@ int power[4] = {0, 0, 0, 0};
 int powerMax = 1000;
 
 // Firing "delay"
-int timings[4] = {7833, 7833, 7833, 7833};
+int timings[4] = {8100, 8100, 8100, 8100};
 
 // Setup serial connection and define pins
 void setup() {
@@ -48,40 +48,40 @@ void setup() {
 
 //Call functions in order
 void loop() {
-  unsigned long timePassed = micros() - previousMicros();
+  unsigned long timePassed = micros() - previousMicros;
 
   // ch1
-  if (timePassed > timings[0])
+  if (timePassed > timings[0] && timePassed < timings[0] + 500)
   {
     digitalWrite(ch1, HIGH);
-  } else if (timePassed > timings[0] + 500)
+  } else if (timePassed < timings[0] || timePassed > timings[0] + 500)
   {
     digitalWrite(ch1, LOW);
   }
   
   // ch2
-  if (timePassed > timings[1])
+  if (timePassed > timings[1] && timePassed < timings[1] + 500)
   {
     digitalWrite(ch2, HIGH);
-  } else if (timePassed > timings[1] + 500)
+  } else if (timePassed < timings[1] || timePassed > timings[1] + 500)
   {
     digitalWrite(ch2, LOW);
   }
 
   // ch3
-  if (timePassed > timings[2])
+  if (timePassed > timings[2] && timePassed < timings[2] + 500)
   {
     digitalWrite(ch3, HIGH);
-  } else if (timePassed > timings[2] + 500)
+  } else if (timePassed < timings[2] || timePassed > timings[2] + 500)
   {
     digitalWrite(ch3, LOW);
   }
 
   // ch4
-  if (timePassed > timings[3])
+  if (timePassed > timings[3] && timePassed < timings[3] + 500)
   {
     digitalWrite(ch4, HIGH);
-  } else if (timePassed > timings[3] + 500)
+  } else if (timePassed < timings[3] || timePassed > timings[3] + 500)
   {
     digitalWrite(ch4, LOW);
   }
@@ -92,9 +92,9 @@ void loop() {
   }
 
   //Send back power levels
-  if ((currentMicros - sendBack) > 10000000) {
+  if ((micros() - sendBack) > 10000000) {
     sendPower();
-    sendBack = currentMicros;
+    sendBack = micros();
   }
 
   // for debugging
@@ -112,7 +112,7 @@ void timerReset() {
 void receivePower() {
   for (int i = 0; i < 4; i++) {
     power[i] = Serial.parseInt();
-    timings[i] = map(power[i], 0, powerMax, 7833, 0);
+    timings[i] = map(power[i], 0, powerMax, 8100, 600);
   }
   bufferFlush();
   sendPower();
