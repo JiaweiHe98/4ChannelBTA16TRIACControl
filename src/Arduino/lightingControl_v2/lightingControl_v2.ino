@@ -112,7 +112,7 @@ void timerReset() {
 void receivePower() {
   for (int i = 0; i < 4; i++) {
     power[i] = Serial.parseInt();
-    timings[i] = map(power[i], 0, powerMax, 8100, 600);
+    timings[i] = map(power[i], 0, powerMax, 8100, 800);
   }
   bufferFlush();
   sendPower();
