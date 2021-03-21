@@ -97,16 +97,11 @@ void loop() {
     sendBack = micros();
   }
 
-  // for debugging
-//  delay(1000);
-//  sendPower();
-//  sequenceStart();
 }
 
 void timerReset() {
   previousMicros = micros();
 }
-
 
 //For receiving settings
 void receivePower() {
@@ -128,34 +123,6 @@ void sendPower() {
     }
   }
   Serial.println("]");
-
-// For debuging
-//  Serial.print("[");
-//  for (int i = 0; i < 8; i++) {
-//    Serial.print(timings[i]);
-//    if (i < 7) {
-//      Serial.print(",");
-//    }
-//  }
-//  Serial.println("]");
-//  
-//  Serial.print("[");
-//  for (int i = 0; i < 8; i++) {
-//    Serial.print(channelNum[i]);
-//    if (i < 7) {
-//      Serial.print(",");
-//    }
-//  }
-//  Serial.println("]");
-//
-//  Serial.print("[");
-//  for (int i = 0; i < 8; i++) {
-//    Serial.print(states[i]);
-//    if (i < 7) {
-//      Serial.print(",");
-//    }
-//  }
-//  Serial.println("]");
 }
 
 //Flush the remaining garbage information in serial buffer

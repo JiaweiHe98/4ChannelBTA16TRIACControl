@@ -14,7 +14,7 @@ int ch4 = 11;
 int zeroCrossing = 2;
 
 // Power output initialization
-int power[4] = {0, 0, 0, 0};
+int power[4] = {1, 1, 1, 1};
 int powerMax = 100;
 
 // Firing "delay"
@@ -93,8 +93,9 @@ void loop() {
     // Convet powerlevel to "delay"
     if (raw >= 100 && raw < 500) {
       int i = raw / 100 % 10 - 1;
-      power[i] = raw - i * 100 + 1;
+      power[i] = raw - (i + 1) * 100 + 1;
       timings[i] = map(power[i], 1, powerMax, 8100, 600);
+      sendPower();
     }
   }
 
@@ -120,38 +121,4 @@ void sendPower() {
   }
   Serial.println("]");
 
-// For debuging
-//  Serial.print("[");
-//  for (int i = 0; i < 8; i++) {
-//    Serial.print(timings[i]);
-//    if (i < 7) {
-//      Serial.print(",");
-//    }
-//  }
-//  Serial.println("]");
-//  
-//  Serial.print("[");
-//  for (int i = 0; i < 8; i++) {
-//    Serial.print(channelNum[i]);
-//    if (i < 7) {
-//      Serial.print(",");
-//    }
-//  }
-//  Serial.println("]");
-//
-//  Serial.print("[");
-//  for (int i = 0; i < 8; i++) {
-//    Serial.print(states[i]);
-//    if (i < 7) {
-//      Serial.print(",");
-//    }
-//  }
-//  Serial.println("]");
-}
-
-//Flush the remaining garbage information in serial buffer
-void bufferFlush() {
-  while(Serial.available() > 0) {
-    char t = Serial.read();
-  }
 }
