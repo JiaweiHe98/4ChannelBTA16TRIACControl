@@ -17,11 +17,11 @@ The box can be compatible with fans range from 40mm to 70mm. It prevents electri
 
 ### Dimmer
 <img src="./img/dimmer.jpg">
+The control circuit is powered by outside DC sources. The main AC will only power the loads.
 
 ### Testing
 <img src="./img/Testing.gif">
 
-I don't have enough LEDs. 
 
 ## Prepare for Developing
 This section will guide you through the software and tools required for building this project.
