@@ -15,7 +15,7 @@ int zeroCrossing = 2;
 
 // Power output initialization
 int power[4] = {0, 0, 0, 0};
-int powerMax = 1000;
+int powerMax = 100;
 
 // Firing "delay"
 int timings[4] = {8100, 8100, 8100, 8100};
@@ -42,87 +42,56 @@ void setup() {
   // Initialize hardware interrupt, start sequence
   attachInterrupt(digitalPinToInterrupt(zeroCrossing), timerReset, FALLING);
 
-  // send initial power level
-  sendPower();
 }
 
 //Call functions in order
 void loop() {
-  unsigned long timePassed = micros() - previousMicros;
 
   // ch1
-  if (timePassed > timings[0] && timePassed < timings[0] + 500)
+  if (micros() - previousMicros > timings[0] && micros() - previousMicros < timings[0] + 500)
   {
     digitalWrite(ch1, HIGH);
-  } else if (timePassed < timings[0] || timePassed > timings[0] + 500)
-  {
+  } else {
     digitalWrite(ch1, LOW);
   }
   
   // ch2
-  if (timePassed > timings[1] && timePassed < timings[1] + 500)
+  if (micros() - previousMicros > timings[1] && micros() - previousMicros < timings[1] + 500)
   {
     digitalWrite(ch2, HIGH);
-  } else if (timePassed < timings[1] || timePassed > timings[1] + 500)
-  {
+  } else {
     digitalWrite(ch2, LOW);
   }
 
   // ch3
-  if (timePassed > timings[2] && timePassed < timings[2] + 500)
+  if (micros() - previousMicros > timings[2] && micros() - previousMicros < timings[2] + 500)
   {
     digitalWrite(ch3, HIGH);
-  } else if (timePassed < timings[2] || timePassed > timings[2] + 500)
-  {
+  } else {
     digitalWrite(ch3, LOW);
   }
 
   // ch4
-  if (timePassed > timings[3] && timePassed < timings[3] + 500)
+  if (micros() - previousMicros > timings[3] && micros() - previousMicros < timings[3] + 500)
   {
     digitalWrite(ch4, HIGH);
-  } else if (timePassed < timings[3] || timePassed > timings[3] + 500)
-  {
+  } else {
     digitalWrite(ch4, LOW);
   }
 
   //Receive settings
   if (Serial.available() > 0) {
-    receivePower();
-  }
-
-  //Send back power levels
-  if ((micros() - sendBack) > 10000000) {
-    sendPower();
-    sendBack = micros();
+    for (int i = 0; i < 4; i++) {
+      power[i] = Serial.parseInt();
+      timings[i] = map(power[i], 0, powerMax, 8100, 800);
+    }
+    bufferFlush();
   }
 
 }
 
 void timerReset() {
   previousMicros = micros();
-}
-
-//For receiving settings
-void receivePower() {
-  for (int i = 0; i < 4; i++) {
-    power[i] = Serial.parseInt();
-    timings[i] = map(power[i], 0, powerMax, 8100, 800);
-  }
-  bufferFlush();
-  sendPower();
-}
-
-//Send back power levels
-void sendPower() {
-  Serial.print("[");
-  for (int i = 0; i < 4; i++) {
-    Serial.print(power[i]);
-    if (i < 3) {
-      Serial.print(",");
-    }
-  }
-  Serial.println("]");
 }
 
 //Flush the remaining garbage information in serial buffer
