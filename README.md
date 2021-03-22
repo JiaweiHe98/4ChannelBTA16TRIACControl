@@ -12,6 +12,9 @@ The gauges on the top show the current settings of each channel. The sliders bel
 <img src="./img/Flow1.PNG">
 Node-Red is a visual programming tool based on Node.js. It allows us to use blocks and line to build our program. From the diagram above, the main steam is divided into 4 sub steams and each of them is in charge of one channel of the dimmer.
 
+### System Diagram
+<img src="./img/System Diagram.jpg">
+
 ### 3D Printed Control Box
 <img src="./img/3dBox final.png">
 
