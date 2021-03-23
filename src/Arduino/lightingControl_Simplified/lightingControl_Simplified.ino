@@ -15,7 +15,7 @@ int zeroCrossing = 2;
 
 // Power output initialization
 int power[4] = {0, 0, 0, 0};
-int powerMax = 100;
+int powerMax = 1000;
 
 // Firing "delay"
 int timings[4] = {8100, 8100, 8100, 8100};
