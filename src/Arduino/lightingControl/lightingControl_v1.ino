@@ -53,8 +53,7 @@ void loop() {
   if (micros() - previousMicros > timings[0] && micros() - previousMicros < timings[0] + 500)
   {
     digitalWrite(ch1, HIGH);
-  } else if (micros() - previousMicros < timings[0] || micros() - previousMicros > timings[0] + 500)
-  {
+  } else {
     digitalWrite(ch1, LOW);
   }
   
